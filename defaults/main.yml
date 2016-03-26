@@ -1,2 +1,12 @@
 ---
 # defaults file for konsole
+# konsolerc config options
+konsole_default_profile: Shell.profile
+
+konsole_save_geometry_on_exit: 'false'
+konsole_show_app_name_on_title_bar: 'false'
+konsole_show_menu_by_default: 'false'
+konsole_show_paste_huge_text_warning: 'false'
+konsole_menu_bar: 'Disabled'
+
+konsole_tab_bar_visibility: AlwaysHideTabBar

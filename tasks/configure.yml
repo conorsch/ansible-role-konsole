@@ -22,8 +22,8 @@
 
 # Configures Konsole dotfiles
 - name: Copy konsolerc.
-  copy:
-    src: konsolerc
+  template:
+    src: konsolerc.j2
     dest: "~{{ username }}/.kde/share/config/konsolerc"
 
 - name: Copy default Konsole profile.
