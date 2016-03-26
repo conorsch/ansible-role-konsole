@@ -4,4 +4,3 @@
   apt:
     name: konsole
     state: present
-

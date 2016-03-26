@@ -1,4 +1,14 @@
 ---
+# TODO: Figure out the correct config directories, because
+# the tasks below write to .kde and .local. That can't be right.
+- name: Create local Konsole config directory.
+  file:
+    state: directory
+    path: "~{{ username }}/.local/share/konsole"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: "0750"
+
 - name: Create Konsole config directories.
   file:
     state: directory
@@ -15,25 +25,11 @@
   copy:
     src: konsolerc
     dest: "~{{ username }}/.kde/share/config/konsolerc"
-  tags:
-    - konsole
 
 - name: Copy default Konsole profile.
   copy:
     src: Shell.profile
     dest: "~{{ username }}/.kde/share/apps/konsole/Shell.profile"
-  tags:
-    - konsole
-
-  # TODO: All Konsole-related tasks should be writing to the ~/.local
-  # directory, since it overrides the defaults in ~/.kde.
-- name: Create local Konsole config directory.
-  file:
-    state: directory
-    path: "~{{ username }}/.local/share/konsole"
-    owner: "{{ username }}"
-    group: "{{ username }}"
-    mode: "0750"
 
 - name: Copy custom Konsole color scheme.
   copy:
@@ -42,6 +38,5 @@
     # dest: "~{{ username }}/.kde/share/apps/konsole/Linux.colorscheme"
     # Custom location, overrides the default.
     dest: "~{{ username }}/.local/share/konsole/Linux.colorscheme"
-  tags:
-    - konsole
-
+  when: konsole_custom_color is defined and
+        konsole_custom_color == true
