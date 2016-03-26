@@ -1,2 +1,5 @@
 ---
 # tasks file for konsole
+- include: packages.yml
+
+- include: configure.yml

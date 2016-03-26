@@ -1,0 +1,47 @@
+---
+- name: Create Konsole config directories.
+  file:
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: "0700"
+    path: "~{{ username }}/.kde/share/{{ item }}"
+  with_items:
+    - config
+    - apps/konsole
+
+# Configures Konsole dotfiles
+- name: Copy konsolerc.
+  copy:
+    src: konsolerc
+    dest: "~{{ username }}/.kde/share/config/konsolerc"
+  tags:
+    - konsole
+
+- name: Copy default Konsole profile.
+  copy:
+    src: Shell.profile
+    dest: "~{{ username }}/.kde/share/apps/konsole/Shell.profile"
+  tags:
+    - konsole
+
+  # TODO: All Konsole-related tasks should be writing to the ~/.local
+  # directory, since it overrides the defaults in ~/.kde.
+- name: Create local Konsole config directory.
+  file:
+    state: directory
+    path: "~{{ username }}/.local/share/konsole"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: "0750"
+
+- name: Copy custom Konsole color scheme.
+  copy:
+    src: Linux.colorscheme
+    # Default location is here, and has a pristine copy.
+    # dest: "~{{ username }}/.kde/share/apps/konsole/Linux.colorscheme"
+    # Custom location, overrides the default.
+    dest: "~{{ username }}/.local/share/konsole/Linux.colorscheme"
+  tags:
+    - konsole
+

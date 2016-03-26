@@ -1,0 +1,7 @@
+---
+- name: Install Konsole.
+  become: yes
+  apt:
+    name: konsole
+    state: present
+
