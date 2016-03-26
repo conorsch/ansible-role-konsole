@@ -27,8 +27,8 @@
     dest: "~{{ username }}/.kde/share/config/konsolerc"
 
 - name: Copy default Konsole profile.
-  copy:
-    src: Shell.profile
+  template:
+    src: Shell.profile.j2
     dest: "~{{ username }}/.kde/share/apps/konsole/Shell.profile"
 
 - name: Copy custom Konsole color scheme.

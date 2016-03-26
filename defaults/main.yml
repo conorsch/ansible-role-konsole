@@ -10,3 +10,13 @@ konsole_show_paste_huge_text_warning: 'false'
 konsole_menu_bar: 'Disabled'
 
 konsole_tab_bar_visibility: AlwaysHideTabBar
+
+# Shell.profile options
+konsole_profile_color_scheme: Linux
+konsole_profile_font: Monospace,18,-1,2,50,0,0,0,0,0
+konsole_profile_environment: TERM=xterm-256color
+
+konsole_profile_history_size: 10000
+konsole_profile_scroll_bar_position: 2
+konsole_profile_blinking_cursor_enabled: 'true'
+konsole_profile_key_bindings: linux
