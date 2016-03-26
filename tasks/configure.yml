@@ -38,5 +38,5 @@
     # dest: "~{{ username }}/.kde/share/apps/konsole/Linux.colorscheme"
     # Custom location, overrides the default.
     dest: "~{{ username }}/.local/share/konsole/Linux.colorscheme"
-  when: konsole_custom_color is defined and
-        konsole_custom_color == true
+  when: konsole_configure_colorscheme is defined and
+        konsole_configure_colorscheme == true
