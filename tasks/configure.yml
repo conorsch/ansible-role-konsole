@@ -1,6 +1,10 @@
 ---
-# TODO: Figure out the correct config directories, because
-# the tasks below write to .kde and .local. That can't be right.
+# The default location for Konsole config files is:
+#   "{{ ansible_env.HOME }}/.kde/share/apps/konsole"
+# Check there for pristine copies. These tasks write to:
+#   "{{ ansible_env.HOME }}/.local/share/konsole"
+#   "{{ ansible_env.HOME }}/.config"
+# to override the pristine versions.
 - name: Create local Konsole config directory.
   become: yes
   become_user: "{{ konsole_username }}"
@@ -8,41 +12,26 @@
     state: directory
     path: "{{ ansible_env.HOME }}/.local/share/konsole"
 
-- name: Create Konsole config directories.
-  become: yes
-  become_user: "{{ konsole_username }}"
-  file:
-    state: directory
-    path: "{{ ansible_env.HOME }}/.kde/share/{{ item }}"
-  # Multiple dirs here because we must create parent dirs first.
-  with_items:
-    - config
-    - apps
-    - apps/konsole
-
 # Configures Konsole dotfiles
 - name: Copy konsolerc.
   become: yes
   become_user: "{{ konsole_username }}"
   template:
     src: konsolerc.j2
-    dest: "{{ ansible_env.HOME }}/.kde/share/config/konsolerc"
+    dest: "{{ ansible_env.HOME }}/.config/konsolerc"
 
 - name: Copy default Konsole profile.
   become: yes
   become_user: "{{ konsole_username }}"
   template:
     src: Shell.profile.j2
-    dest: "{{ ansible_env.HOME }}/.kde/share/apps/konsole/Shell.profile"
+    dest: "{{ ansible_env.HOME }}/.local/share/konsole/Shell.profile"
 
 - name: Copy custom Konsole color scheme.
   become: yes
   become_user: "{{ konsole_username }}"
   copy:
     src: Linux.colorscheme
-    # Default location is here, and has a pristine copy.
-    # dest: "{{ ansible_env.HOME }}/.kde/share/apps/konsole/Linux.colorscheme"
-    # Custom location, overrides the default.
     dest: "{{ ansible_env.HOME }}/.local/share/konsole/Linux.colorscheme"
   when: konsole_configure_colorscheme is defined and
         konsole_configure_colorscheme == true
