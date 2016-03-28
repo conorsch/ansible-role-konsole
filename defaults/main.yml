@@ -1,5 +1,10 @@
 ---
 # defaults file for konsole
+
+# Target user for whom konsole dotfiles will be configured.
+# The SSH user is a sane default, but fail over to whoami for local connections.
+konsole_username: "{{ ansible_ssh_user | default(lookup('pipe', 'whoami')) }}"
+
 # konsolerc config options
 konsole_default_profile: Shell.profile
 
