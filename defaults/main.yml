@@ -18,7 +18,11 @@ konsole_tab_bar_visibility: AlwaysHideTabBar
 
 # Shell.profile options
 konsole_profile_color_scheme: Linux
-konsole_profile_font: Monospace,18,-1,2,50,0,0,0,0,0
+
+konsole_profile_font: Monospace
+konsole_profile_font_size: 18
+konsole_profile_font_config: "{{ konsole_profile_font }},{{ konsole_profile_font_size }},-1,2,50,0,0,0,0,0"
+
 konsole_profile_environment: TERM=xterm-256color
 
 konsole_profile_history_size: 10000
