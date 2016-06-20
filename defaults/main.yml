@@ -3,7 +3,12 @@
 
 # Target user for whom konsole dotfiles will be configured.
 # The SSH user is a sane default, but fail over to whoami for local connections.
-konsole_username: "{{ ansible_ssh_user | default(lookup('pipe', 'whoami')) }}"
+# The fallback_user is necesary for Ansible v2 support, since ansible_ssh_user is no
+# longer defined by default, even over SSH connections.
+konsole_fallback_user: "{{ lookup('env', 'USER') }}"
+konsole_username: >-
+  {{ ansible_ssh_user|default(konsole_fallback_user)
+  if ansible_ssh_user|default(konsole_fallback_user) != 'root' else  konsole_fallback_user }}
 
 # konsolerc config options
 konsole_default_profile: Shell.profile

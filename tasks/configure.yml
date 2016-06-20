@@ -6,32 +6,24 @@
 #   "{{ ansible_env.HOME }}/.config"
 # to override the pristine versions.
 - name: Create local Konsole config directory.
-  become: yes
-  become_user: "{{ konsole_username }}"
   file:
     state: directory
-    path: "{{ ansible_env.HOME }}/.local/share/konsole"
+    path: "~{{ konsole_username }}/.local/share/konsole"
 
 # Configures Konsole dotfiles
 - name: Copy konsolerc.
-  become: yes
-  become_user: "{{ konsole_username }}"
   template:
     src: konsolerc.j2
-    dest: "{{ ansible_env.HOME }}/.config/konsolerc"
+    dest: "~{{ konsole_username }}/.config/konsolerc"
 
 - name: Copy default Konsole profile.
-  become: yes
-  become_user: "{{ konsole_username }}"
   template:
     src: Shell.profile.j2
-    dest: "{{ ansible_env.HOME }}/.local/share/konsole/Shell.profile"
+    dest: "~{{ konsole_username }}/.local/share/konsole/Shell.profile"
 
 - name: Copy custom Konsole color scheme.
-  become: yes
-  become_user: "{{ konsole_username }}"
   copy:
     src: Linux.colorscheme
-    dest: "{{ ansible_env.HOME }}/.local/share/konsole/Linux.colorscheme"
+    dest: "~{{ konsole_username }}/.local/share/konsole/Linux.colorscheme"
   when: konsole_configure_colorscheme is defined and
         konsole_configure_colorscheme == true
